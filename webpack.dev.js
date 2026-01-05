@@ -10,4 +10,3 @@ module.exports = merge(common, {
     watchFiles: ["./src/template.html"],
   },
 });
-

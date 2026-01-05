@@ -1,12 +1,16 @@
 {
-  "name": "todo-list",
+  "name": "weather-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "repository": {
     "type": "git",
@@ -20,9 +24,16 @@
   },
   "homepage": "https://github.com/WildForce112/todo-list#readme",
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
     "css-loader": "^7.1.2",
+    "eslint": "^9.39.2",
+    "globals": "^17.0.0",
     "html-webpack-plugin": "^5.6.5",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "3.7.4",
     "style-loader": "^4.0.0",
+    "typescript-eslint": "^8.51.0",
     "webpack": "^5.104.1",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2",

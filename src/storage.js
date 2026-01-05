@@ -25,4 +25,4 @@ function getStorage() {
   return JSON.parse(localStorage.getItem("projects"));
 }
 
-export {storageAvailable, populateStorage, getStorage}
+export { storageAvailable, populateStorage, getStorage };
