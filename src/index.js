@@ -1,8 +1,11 @@
 import { format } from "date-fns";
+import "./styles.css";
 
-const apiKey = "63JRNLFFQTB7UJA8SD29B2F7P";
-
-const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/hochiminh,vn?key=${apiKey}`;
+function getURL(location) {
+  const apiKey = "63JRNLFFQTB7UJA8SD29B2F7P";
+  // const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/hochiminh,vn?key=${apiKey}`;
+  return `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${apiKey}`;
+}
 
 async function getWeatherDataFromJson() {
   const jsonPath = "/weather.json";
@@ -20,14 +23,18 @@ async function getWeatherDataFromJson() {
 
 async function getWeatherData(url) {
   try {
-    const data = await fetch(url);
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+    const data = await res.json();
     return data;
   } catch (err) {
     console.log(err);
   }
 }
 
-function getHourlyWeather() {
+function getHourlyWeather(data) {
   let hourlyWeather = [];
   for (let i = 0; i <= 25; i++) {
     const now = new Date();
@@ -45,6 +52,17 @@ function getHourlyWeather() {
   return hourlyWeather;
 }
 
-const data = await getWeatherDataFromJson();
-const forcastData = getHourlyWeather();
-console.log(forcastData);
+const form = document.querySelector("form");
+const formBtn = document.querySelector("#location-input+button");
+
+form.addEventListener("submit", async (e) => {
+  const locationInput = e.target.querySelector("input").value;
+  e.preventDefault();
+  e.target.querySelector("input").value = "";
+  const forcastData = getHourlyWeather(
+    await getWeatherData(getURL(locationInput)),
+  );
+  console.log(forcastData);
+});
+
+console.log(getHourlyWeather(await getWeatherDataFromJson()));
