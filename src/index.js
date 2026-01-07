@@ -1,5 +1,6 @@
-import { format } from "date-fns";
 import "./styles.css";
+import { format } from "date-fns";
+import { Renderer } from "./render";
 
 function getURL(location) {
   const apiKey = "63JRNLFFQTB7UJA8SD29B2F7P";
@@ -65,4 +66,5 @@ form.addEventListener("submit", async (e) => {
   console.log(forcastData);
 });
 
-console.log(getHourlyWeather(await getWeatherDataFromJson()));
+const hourlyWeatherList = getHourlyWeather(await getWeatherDataFromJson());
+Renderer.renderHourlyWeather(hourlyWeatherList);
