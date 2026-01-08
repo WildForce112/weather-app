@@ -1,6 +1,6 @@
 import "./styles.css";
 import { format } from "date-fns";
-import { Renderer } from "./render";
+import { init, Renderer } from "./render";
 
 function getURL(location) {
   const apiKey = "63JRNLFFQTB7UJA8SD29B2F7P";
@@ -63,8 +63,14 @@ form.addEventListener("submit", async (e) => {
   const forcastData = getHourlyWeather(
     await getWeatherData(getURL(locationInput)),
   );
-  console.log(forcastData);
+  Renderer.renderHourlyWeather(forcastData);
+});
+
+const tempSlider = document.querySelector(".switch>input");
+
+tempSlider.addEventListener("click", (e) => {
+  Renderer.renderHourlyWeather(hourlyWeatherList);
 });
 
 const hourlyWeatherList = getHourlyWeather(await getWeatherDataFromJson());
-Renderer.renderHourlyWeather(hourlyWeatherList);
+Renderer.init(hourlyWeatherList);

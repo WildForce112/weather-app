@@ -9,8 +9,16 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2vh;
 }
-
+.temp-switch-container {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+.temp-switch-container > div {
+  font-size: 2rem;
+}
 .switch {
   position: relative;
   display: inline-block;
@@ -44,6 +52,9 @@ nav {
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
+/* input:checked + .slider {
+  background-color: #2196F3;
+} */
 input:focus + .slider {
   box-shadow: 0 0 1px #2196f3;
 }
