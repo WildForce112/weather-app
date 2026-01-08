@@ -9,23 +9,43 @@ export const Renderer = (() => {
   const tempSlider = document.querySelector(".switch>input");
   container.id = "hourly-weather-container";
 
-  function createWeatherBlock(arr) {
+  async function getWeatherIcon(icon) {
+    try {
+      return (await import(`./icons/${icon}.svg`)).default;
+    } catch {
+      return;
+    }
+  }
+
+  async function createWeatherBlock(arr) {
     const weatherBlock = document.createElement("div");
     weatherBlock.classList.add("weather-block");
-    ["time", "icon", "temp"].forEach((item) => {
-      const itemDisplay = document.createElement("div");
-      itemDisplay.classList.add(item);
-      itemDisplay.textContent = arr[item];
+    for (const item of ["time", "icon", "temp"]) {
+      let itemDisplay;
+      if (item !== "icon") {
+        itemDisplay = document.createElement("div");
+        itemDisplay.classList.add(item);
+        itemDisplay.textContent = arr[item];
+      } else {
+        itemDisplay = document.createElement("img");
+        itemDisplay.classList.add("icon");
+
+        try {
+          itemDisplay.src = await getWeatherIcon(arr[item]);
+        } catch {
+          itemDisplay.alt = "unknown weather";
+        }
+      }
       weatherBlock.appendChild(itemDisplay);
-    });
+    }
     return weatherBlock;
   }
 
-  function renderHourlyWeather(array, checked = tempSlider.checked) {
+  async function renderHourlyWeather(array, checked = tempSlider.checked) {
     container.textContent = "";
     for (const hourly of array) {
       container.appendChild(
-        createWeatherBlock({
+        await createWeatherBlock({
           time: hourly.datetime.slice(0, 5),
           icon: hourly.icon,
           temp: checked
