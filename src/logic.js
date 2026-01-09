@@ -30,11 +30,11 @@ function getHourlyWeather(data) {
       (day) => day.datetime == format(nearestHour, "yyyy-MM-dd"),
     );
     const hourlyData = thisDayData.hours.find(
-      (hour) => hour.datetime == format(nearestHour, "hh:mm:ss"),
+      (hour) => hour.datetime == format(nearestHour, "HH:mm:ss"),
     );
     hourlyWeather.push(hourlyData);
   }
   return hourlyWeather;
 }
 
-export { getWeatherDataFromJson, getWeatherData, getHourlyWeather };
+export { getWeatherData, getHourlyWeather };

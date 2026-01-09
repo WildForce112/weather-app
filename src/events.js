@@ -1,9 +1,5 @@
 import { Renderer } from "./render";
-import {
-  getHourlyWeather,
-  getWeatherDataFromJson,
-  getWeatherData,
-} from "./logic";
+import { getHourlyWeather, getWeatherData } from "./logic";
 
 export function handleEvents() {
   const form = document.querySelector("form");
@@ -13,13 +9,16 @@ export function handleEvents() {
     const locationInput = e.target.querySelector("input").value;
     e.preventDefault();
     e.target.querySelector("input").value = "";
-    const forcastData = getHourlyWeather(await getWeatherData(locationInput));
+    hourlyWeatherList = await getWeatherData(locationInput);
+    const forcastData = getHourlyWeather(hourlyWeatherList);
     Renderer.renderHourlyWeather(forcastData);
   });
 
   const tempSlider = document.querySelector(".switch>input");
 
   tempSlider.addEventListener("click", (e) => {
-    Renderer.renderHourlyWeather(hourlyWeatherList);
+    Renderer.renderHourlyWeather(getHourlyWeather(hourlyWeatherList));
   });
 }
+
+var hourlyWeatherList = [];
