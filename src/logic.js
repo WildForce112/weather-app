@@ -2,22 +2,7 @@ import { format } from "date-fns";
 
 function getURL(location) {
   const apiKey = "63JRNLFFQTB7UJA8SD29B2F7P";
-  // const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/hochiminh,vn?key=${apiKey}`;
   return `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${apiKey}`;
-}
-
-async function getWeatherDataFromJson() {
-  const jsonPath = "/weather.json";
-  try {
-    const res = await fetch(jsonPath);
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
-    }
-    const data = await res.json();
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
 }
 
 async function getWeatherData(location) {

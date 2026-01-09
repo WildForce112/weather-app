@@ -23,6 +23,3 @@ export function handleEvents() {
     Renderer.renderHourlyWeather(hourlyWeatherList);
   });
 }
-
-const hourlyWeatherList = getHourlyWeather(await getWeatherDataFromJson());
-// Renderer.init(hourlyWeatherList);
