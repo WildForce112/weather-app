@@ -1,5 +1,3 @@
-let tempMode = "F";
-
 function convertToCelcius(Fahrenheit) {
   return ((Fahrenheit - 32) * 5) / 9;
 }
@@ -29,10 +27,10 @@ export const Renderer = (() => {
       } else {
         itemDisplay = document.createElement("img");
         itemDisplay.classList.add("icon");
-
-        try {
-          itemDisplay.src = await getWeatherIcon(arr[item]);
-        } catch {
+        const src = await getWeatherIcon(arr[item]);
+        if (src) {
+          itemDisplay.src = src;
+        } else {
           itemDisplay.alt = "unknown weather";
         }
       }
@@ -49,15 +47,15 @@ export const Renderer = (() => {
           time: hourly.datetime.slice(0, 5),
           icon: hourly.icon,
           temp: checked
-            ? `${Math.round(convertToCelcius(hourly.temp) * 10) / 10} ℃`
-            : `${hourly.temp} ℉`,
+            ? `${Math.round(convertToCelcius(hourly.temp) * 10) / 10}℃`
+            : `${hourly.temp}℉`,
         }),
       );
     }
   }
 
-  function init(arr) {
-    renderHourlyWeather(arr);
+  async function init(arr) {
+    await renderHourlyWeather(arr);
   }
 
   document.querySelector("main").appendChild(container);
